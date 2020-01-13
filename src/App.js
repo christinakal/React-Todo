@@ -5,17 +5,17 @@ import TodoList from './components/TodoComponents/TodoList.js';
 const todos = [
   {
     task: 'Clean office',
-      id: Date.now(),
-      completed: false
+    id: 1,
+    completed: false
   },
   {
     task: 'Walk the dog',
-    id: Date.now(),
+    id: 2,
     completed: false
   }, 
   {
     task: 'Work meeting',
-    id: Date.now(),
+    id: 3,
     completed: false
   }
 ]
@@ -27,16 +27,47 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: todos
+      todoList: todos
     };
   }
+
+  toggleTodo = id => {
+    const newTodoList = this.state.todoList.map(todo => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          completed: !todo.completed
+        };
+      } else {
+        return todo;
+      }
+    });
+    this.setState({
+      todoList: newTodoList
+    });
+  };
+  
+
+  addTodo = todoName => {
+    const newTodo = {
+      name: todoName,
+      id: Date.now(),
+      completed: false
+    };
+    this.setState({
+      todoList: [...this.state.todoList, newTodo]
+    });
+  };
+
   render() {
     return (
       <div>
         <h1>This is a Todo App</h1>
-        <h2>{this.state.task}</h2>
-        <TodoList todos={this.state.todos}/>
-        <TodoForm />
+        {/* <h2>{this.state.task}</h2> */}
+        <div>
+          <TodoForm addTodo={this.addTodo}/>
+        </div>
+          <TodoList todos={this.state.todoList} toggleTodo={this.toggleTodo}/>
       </div>
     );
   }
