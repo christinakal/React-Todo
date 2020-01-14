@@ -61,13 +61,13 @@ class App extends React.Component {
 
   clearCompleted = e => {
     e.preventDefault();
-    const todos = this.state.todoList.map(todo => ({
-      ...todo,
-      completed: false,
-    }));
-
+    const todos = this.state.todoList.filter(todo => {
+        return todo.completed === false;
+      } 
+    );
+    console.log(todos);
     this.setState({
-      todos,
+      todoList: todos
     });
   }
 
